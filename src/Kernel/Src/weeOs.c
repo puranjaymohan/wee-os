@@ -5,10 +5,11 @@ typedef struct tcb {
 	struct tcb *next_tcb;
 } tcb;
 
-tcb *current_tcb;
+tcb tcbs[MAX_TASKS];
+tcb *task_ptr=&tcbs[0];
+tcb *current_tcb = &tcbs[0]; //Check this
 
-tcb tcbs[NUM_TASKS];
-int32_t STACK[NUM_TASKS][STACK_SIZE];
+int32_t STACK[MAX_TASKS][STACK_SIZE];
 
 static void wee_os_stack_init(uint8_t i )
 {
@@ -16,24 +17,22 @@ static void wee_os_stack_init(uint8_t i )
 	STACK[i][xPSR] = (1 << 24);
 }
 
-uint8_t wee_os_addthreads(void(*task0)(void), void(*task1)(void),
-			  void(*task2)(void))
+uint8_t wee_os_addthread(void(*task)(void))
 {
 	__disable_irq();
+    uint32_t task_num = task_ptr - &tcbs[0];
+    if (task_num>MAX_TASKS)
+        return 0; //Maybe raise error here
+    
+    if (task_ptr != &tcbs[0])
+        (*(task_ptr-1)).next_tcb = task_ptr;
 
-	tcbs[0].next_tcb = &tcbs[1];
-	tcbs[1].next_tcb = &tcbs[2];
-	tcbs[2].next_tcb = &tcbs[0];
+    (*task_ptr).next_tcb = &tcbs[0];
 
-	wee_os_stack_init(0);
-	wee_os_stack_init(1);
-	wee_os_stack_init(2);
+	wee_os_stack_init(task_num);
+	STACK[task_num][PC] = (int32_t)task;
 
-	STACK[0][PC] = (int32_t)task0;
-	STACK[1][PC] = (int32_t)task1;
-	STACK[2][PC] = (int32_t)task2;
-
-	current_tcb = &tcbs[0];
+    task_ptr++;
 
 	__enable_irq();
 	return 1;
