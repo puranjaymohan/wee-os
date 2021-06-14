@@ -1,6 +1,8 @@
 #ifndef __STARTUP__H
 #define __STARTUP__H
+
 void Default_Handler(void);
+/* Interrupt Vector Handlers*/
 void Reset_Handler(void);
 void NMI_Handler(void) __attribute__((weak, alias("Default_Handler")));
 void HardFault_Handler(void) __attribute__((weak, alias("Default_Handler")));
@@ -93,8 +95,10 @@ void LCD_Handler(void) __attribute__((weak, alias("Default_Handler")));
 void AES_Handler(void) __attribute__((weak, alias("Default_Handler")));
 void RNG_Handler(void) __attribute__((weak, alias("Default_Handler")));
 void FPU_Handler(void) __attribute__((weak, alias("Default_Handler")));
+/* Interrupt Vector Handlers End*/
 
 void init_data(uint32_t *dst_start, uint32_t *dst_end, uint32_t *src);
 void init_bss(uint32_t *start, uint32_t *end);
 
+void init_clock_HSI16(void);
 #endif

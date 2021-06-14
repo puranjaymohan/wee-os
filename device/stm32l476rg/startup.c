@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <startup.h>
+#include <stm32l476xx.h>
 
 extern uint32_t _estack;
 extern uint32_t _sdata;
@@ -116,6 +117,8 @@ void Reset_Handler(void)
 	SystemInit();
 	init_data(&_sdata, &_edata, &_ldata);
 	init_bss(&_sbss, &_ebss);
+	init_clock_HSI16();
+	SCB->CCR &= ~(SCB_CCR_STKALIGN_Msk);
 	main();
 }
 
@@ -134,4 +137,18 @@ void init_bss(uint32_t *start, uint32_t *end)
 {
 	while(start < end)
 		*start++ = 0;
+}
+
+void init_clock_HSI16(void)
+{
+	RCC->CR |= RCC_CR_HSION;
+	while(!(RCC->CR & RCC_CR_HSIRDY));
+	RCC->CFGR |= RCC_CFGR_HPRE_DIV1;
+	RCC->CFGR |= RCC_CFGR_PPRE1_DIV1;
+	RCC->CFGR |= RCC_CFGR_PPRE2_DIV1;
+	RCC->CFGR &= ~(RCC_CFGR_SW);
+	RCC->CFGR |= RCC_CFGR_SW_HSI;
+	while(!(RCC->CFGR & RCC_CFGR_SWS_HSI));
+
+	SystemCoreClockUpdate();
 }
