@@ -24,7 +24,10 @@ void task2(void)
 
 int main()
 {
-	wee_os_addthreads(task0, task1, task2);
+	wee_os_addthread(task0);
+	wee_os_addthread(task1);
+	wee_os_addthread(task2);
+
 	wee_os_launch(1);
 	while(1);
 }
