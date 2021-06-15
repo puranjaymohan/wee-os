@@ -4,6 +4,9 @@ PROJECT:=main
 #device for building the project
 DEVICE:=stm32l476rg
 
+#Scheduling algorithm to be used by the OS
+SCHD_ALG = round_robin
+
 # Funtion to find all files inside a directory recursively
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 
@@ -38,7 +41,7 @@ OBJCOPY:=$(CROSS)objcopy
 # gcc & ld compiler flags
 OPT:=-Og
 FLAGS:=-mcpu=cortex-m4 -mthumb
-CFLAGS:=$(FLAGS) $(OPT) $(H) -fno-common -g3 -Wall -Werror -Wextra -D$(DEVICE)
+CFLAGS:=$(FLAGS) $(OPT) $(H) -fno-common -g3 -Wall -Werror -Wextra -D$(DEVICE) -D$(SCHD_ALG)
 LDFLAGS:=$(FLAGS) -T$(LINKER_FILE) -nostartfiles -nostdlib -lnosys
 
 .PHONY: all
