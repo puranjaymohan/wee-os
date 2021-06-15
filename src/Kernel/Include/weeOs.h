@@ -18,7 +18,11 @@
 void wee_os_launch(uint32_t quanta);
 void wee_os_init(void);
 
-uint8_t wee_os_addthread(void(*task)(void));
+uint8_t wee_os_addthread(void(*task)(void)
+#ifdef weighted_round_robin
+			,uint32_t weight
+#endif
+			);
 
 
 #endif
