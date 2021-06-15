@@ -1,13 +1,5 @@
 #include <weeOs.h>
-
-typedef struct tcb {
-	int32_t *sp;
-	struct tcb *next_tcb;
-#ifdef weighted_round_robin
-	uint32_t weight;
-	uint32_t c_weight;
-#endif
-} tcb;
+#include <sched.h>
 
 tcb tcbs[MAX_TASKS];
 tcb *task_ptr=&tcbs[0];
@@ -33,12 +25,13 @@ uint8_t wee_os_addthread(void(*task)(void)
 		return 0;
 
 	if (task_ptr != &tcbs[0])
-		(*(task_ptr-1)).next_tcb = task_ptr;
+		(task_ptr-1)->next_tcb = task_ptr;
 
-	(*task_ptr).next_tcb = &tcbs[0];
+	task_ptr->next_tcb = &tcbs[0];
+	task_ptr->pid = task_num;
 #ifdef weighted_round_robin
-	(*task_ptr).weight = weight;
-	(*task_ptr).c_weight = weight;
+	task_ptr->weight = weight;
+	task_ptr->c_weight = weight;
 #endif
 	wee_os_stack_init(task_num);
 	STACK[task_num][PC] = (int32_t)task;
@@ -74,28 +67,4 @@ void wee_os_launch(uint32_t quanta_ms)
 	current_tcb->c_weight -= 1;
 #endif
 	wee_os_schd_launch();
-}
-
-void SysTick_Handler(void)
-{
-#ifdef weighted_round_robin
-	if (current_tcb->c_weight!=0)
-	{
-		current_tcb->c_weight -= 1;
-		__enable_irq();
-		return;
-	}
-#endif
-	__disable_irq();
-	__asm__ __volatile__ ("PUSH {R4-R11}");
-	__asm__ __volatile__ ("LDR SP, %0" ::"m"(current_tcb->next_tcb->sp));
-	__asm__ __volatile__ ("POP {R4-R11}");
-#ifdef weighted_round_robin
-	current_tcb->c_weight = current_tcb->weight;
-#endif
-	current_tcb = current_tcb->next_tcb;
-#ifdef weighted_round_robin
-	current_tcb->c_weight -= 1;
-#endif
-	__enable_irq();
 }
