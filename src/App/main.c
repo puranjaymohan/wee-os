@@ -1,5 +1,4 @@
 #include <stdint.h>
-#include <stm32l476xx.h>
 #include <weeOs.h>
 
 int t1 = 0;
