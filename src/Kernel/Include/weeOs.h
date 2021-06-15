@@ -1,7 +1,9 @@
 #ifndef __WEEOS_H__
 #define __WEEOS_H__
 #include <stdint.h>
+#ifdef stm32l476rg
 #include <stm32l476xx.h>
+#endif
 
 #define MAX_TASKS 10
 #define STACK_SIZE 100
