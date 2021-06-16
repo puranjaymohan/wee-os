@@ -71,14 +71,14 @@ void wee_os_launch(uint32_t quanta_ms)
 
 
 
-void wee_os_yieldthread(void){
+void wee_os_yield(void){
     #ifdef weighted_round_robin
 	current_tcb->c_weight = 0; //We may disable the interrupt during execution of this line
 	#endif
 	INTCTRL = 0x04000000;
 }
 
-void wee_os_killthread(void){
+void wee_os_kill(void){
 	__disable_irq()
 
 	if(current_tcb->pid != 0)
@@ -93,5 +93,5 @@ void wee_os_killthread(void){
 	//Note: The above will fail if we just have 1 thread running.
 	//Free stack space and structure from memory later since it will lie dormant
 	__enable_irq()
-	wee_os_yieldthread();
+	wee_os_yield();
 }
