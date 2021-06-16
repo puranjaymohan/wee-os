@@ -26,7 +26,7 @@ uint8_t wee_os_addthread(void(*task)(void)
 			);
 
 
-void wee_os_thread(void);
+void wee_os_yield(void);
 void wee_os_kill(void);
 
 #endif
