@@ -50,6 +50,7 @@ void schd_rr()
 inline void context_switch()
 {
 	__asm__ __volatile__ ("PUSH {R4-R11}");
+	current_tcb->sp = (int32_t *)__get_MSP();
         __asm__ __volatile__ ("LDR SP, %0" ::"m"(current_tcb->next_tcb->sp));
         __asm__ __volatile__ ("POP {R4-R11}");
 }

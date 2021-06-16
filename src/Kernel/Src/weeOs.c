@@ -52,6 +52,7 @@ static void wee_os_schd_launch()
 	__asm__ ("POP {LR}");
 	__asm__ ("ADD SP, SP, #4");
 	__enable_irq();
+	__set_CONTROL(0x01);
 	__asm__ ("BX LR");
 }
 
