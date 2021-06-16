@@ -14,6 +14,7 @@
 #define STACK_SIZE 100
 #define xPSR (STACK_SIZE-1)
 #define PC (STACK_SIZE-2)
+#define INTCTRL (*((volatile uint32_t *)0xE000ED04))
 
 void wee_os_launch(uint32_t quanta);
 void wee_os_init(void);
@@ -24,5 +25,8 @@ uint8_t wee_os_addthread(void(*task)(void)
 #endif
 			);
 
+
+void wee_os_thread_yield(void);
+void wee_os_killthread(void);
 
 #endif

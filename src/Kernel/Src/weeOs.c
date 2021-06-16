@@ -68,3 +68,30 @@ void wee_os_launch(uint32_t quanta_ms)
 #endif
 	wee_os_schd_launch();
 }
+
+
+
+void wee_os_yieldthread(void){
+    #ifdef weighted_round_robin
+	current_tcb->c_weight = 0; //We may disable the interrupt during execution of this line
+	#endif
+	INTCTRL = 0x04000000;
+}
+
+void wee_os_killthread(void){
+	__disable_irq()
+
+	if(current_tcb->pid != 0)
+		(*(current_tcb-1)).next_tcb = current_tcb->next_tcb;
+
+	else {
+		tcb *temp_tcb = current_tcb;
+		while (temp_tcb->next_tcb != &tcbs[0])
+			temp_tcb++;
+		(*(temp_tcb)).next_tcb = current_tcb->next_tcb;	
+	}
+	//Note: The above will fail if we just have 1 thread running.
+	//Free stack space and structure from memory later since it will lie dormant
+	__enable_irq()
+	wee_os_yieldthread();
+}
