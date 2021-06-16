@@ -72,7 +72,7 @@ void wee_os_launch(uint32_t quanta_ms)
 
 
 void wee_os_yield(void){
-    #ifdef weighted_round_robin
+	#ifdef weighted_round_robin
 	current_tcb->c_weight = 0; //We may disable the interrupt during execution of this line
 	#endif
 	INTCTRL = 0x04000000;
