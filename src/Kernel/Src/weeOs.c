@@ -62,7 +62,8 @@ void wee_os_launch(uint32_t quanta_ms)
 	__disable_irq();
 	SysTick->CTRL = 0;
 	SysTick->VAL = 0;
-	NVIC_SetPriority (-1, 0);
+	NVIC_SetPriority(-1, 0);
+	NVIC_SetPriority(-2, 15);
 	SysTick_Config(((quanta_ms*SystemCoreClock)/1000) - 1);
 #ifdef weighted_round_robin
 	current_tcb->c_weight -= 1;

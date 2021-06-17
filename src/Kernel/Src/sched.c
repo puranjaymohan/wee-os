@@ -13,6 +13,13 @@ static inline void schd_rr() __attribute__((always_inline));
 void SysTick_Handler(void)
 {
 	__disable_irq();
+	SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
+	__enable_irq();
+}
+
+void PendSV_Handler(void)
+{
+	__disable_irq();
 	scheduler();
 	__enable_irq();
 }
