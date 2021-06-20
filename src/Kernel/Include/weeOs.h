@@ -15,6 +15,9 @@
 #define xPSR (STACK_SIZE-1)
 #define PC (STACK_SIZE-2)
 
+/*System Calls*/
+#define wee_os_yield(); wee_os_system_call(1);
+
 void wee_os_launch(uint32_t quanta);
 void wee_os_init(void);
 
@@ -24,5 +27,6 @@ uint8_t wee_os_addthread(void(*task)(void)
 #endif
 			);
 
+void __attribute__((noinline)) wee_os_system_call(uint32_t syscall_no);
 
 #endif

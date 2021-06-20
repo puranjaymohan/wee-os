@@ -9,6 +9,7 @@ void task0(void)
 {
 	while(1) {
 		c0++;
+		wee_os_yield();
 	}
 }
 
@@ -16,6 +17,7 @@ void task1(void)
 {
 	while(1) {
 		c1++;
+		wee_os_yield();
 	}
 }
 
@@ -23,6 +25,7 @@ void task2(void)
 {
 	while(1) {
 		c2++;
+		wee_os_yield();
 	}
 }
 
@@ -37,6 +40,6 @@ int main()
 	wee_os_addthread(task1);
 	wee_os_addthread(task2);
 #endif
-	wee_os_launch(1);
+	wee_os_launch(100);
 	while(1);
 }
