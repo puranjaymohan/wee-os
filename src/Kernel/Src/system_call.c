@@ -34,3 +34,25 @@ void wee_os_syscall_yield(void)
 #endif
 	SCB->ICSR |= SCB_ICSR_PENDSTSET_Msk;
 }
+
+
+void wee_os_syscall_kill(void)
+{
+	__disable_irq()
+	if(current_tcb->pid!=0)
+	{
+		(current_tcb-1)->next_tcb = current_tcb->next_tcb;
+	}
+
+	else
+	{
+		tcb *temp_tcb = current_tcb;
+		while(temp_tcb->next_tcb != current_tcb)
+			temp_tcb++;
+		temp_tcb->next_tcb = current_tcb->next_tcb;
+	}
+
+	//Will not work when just one process is in the queue
+	__enable_irq()
+	wee_os_syscall_yield();
+}
