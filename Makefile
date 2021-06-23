@@ -2,7 +2,7 @@
 PROJECT:=main
 
 #device for building the project
-DEVICE:=stm32l476rg
+DEVICE:=lm3s811
 
 #Scheduling algorithm to be used by the OS
 SCHD_ALG = round_robin

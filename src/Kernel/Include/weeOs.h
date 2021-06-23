@@ -10,6 +10,10 @@
 #include <MK64F12.h>
 #endif
 
+#ifdef lm3s811
+#include <lm3s811.h>
+#endif
+
 #define MAX_TASKS 10
 #define STACK_SIZE 100
 #define xPSR (STACK_SIZE-1)
