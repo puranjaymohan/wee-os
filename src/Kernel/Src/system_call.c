@@ -3,6 +3,7 @@
 #include <systemcall.h>
 
 extern tcb *current_tcb;
+extern char active_tasks[MAX_TASKS];
 
 uint32_t c=0;
 
@@ -59,6 +60,7 @@ void wee_os_syscall_kill(void)
 		temp_tcb->next_tcb = current_tcb->next_tcb;
 	}
 
+	active_tasks[current_tcb->pid] = 0;
 	__enable_irq();
 	wee_os_syscall_yield();
 }
