@@ -50,7 +50,6 @@ uint8_t wee_os_addthread(void(*task)(void)
 				if(first_occ == &tcbs[0])
 					first_occ += counter;
 				last_occ = &tcbs[0]+counter;
-			}
 			counter++;
 		}
 
