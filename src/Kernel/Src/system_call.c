@@ -35,7 +35,6 @@ void wee_os_syscall_yield(void)
 #ifdef weighted_round_robin
 	current_tcb->c_weight = 0;
 #endif
-	SysTick->VAL = 0;
 	SCB->ICSR |= SCB_ICSR_PENDSTSET_Msk;
 }
 

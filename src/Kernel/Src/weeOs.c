@@ -26,7 +26,6 @@ uint8_t wee_os_addthread(void(*task)(void)
 	while(active_tasks[counter] != 0){
 		counter++;
 		if (counter>MAX_TASKS){
-			__enable_irq();
 			return 0;
 		}
 	}
