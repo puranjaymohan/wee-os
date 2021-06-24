@@ -25,8 +25,10 @@ uint8_t wee_os_addthread(void(*task)(void)
 	uint32_t counter = 0;
 	while(active_tasks[counter] != 0){
 		counter++;
-		if (counter>MAX_TASKS)
+		if (counter>MAX_TASKS){
+			__enable_irq();
 			return 0;
+		}
 	}
 
 	uint32_t task_num = task_ptr - &tcbs[0];
