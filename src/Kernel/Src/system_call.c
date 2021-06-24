@@ -35,18 +35,17 @@ void wee_os_syscall_yield(void)
 #ifdef weighted_round_robin
 	current_tcb->c_weight = 0;
 #endif
+	SysTick->VAL = 0;
 	SCB->ICSR |= SCB_ICSR_PENDSTSET_Msk;
 }
 
 
 void wee_os_syscall_kill(void)
 {
-	__disable_irq();
-
-	if(current_tcb->next_tcb == current_tcb)
+        if(current_tcb->next_tcb == current_tcb)
 	{
 		__enable_irq();
-		return 0;
+		return;
 	}
 
 	if(current_tcb->pid != 0)

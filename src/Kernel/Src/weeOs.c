@@ -24,8 +24,10 @@ uint8_t wee_os_addthread(void(*task)(void)
 	tcb *task_ptr=&tcbs[0];
 	uint32_t counter = 0;
 	while(active_tasks[counter] != 0){
+		task_ptr++;
 		counter++;
 		if (counter>MAX_TASKS){
+			__enable_irq();
 			return 0;
 		}
 	}
@@ -49,6 +51,7 @@ uint8_t wee_os_addthread(void(*task)(void)
 				if(first_occ == &tcbs[0])
 					first_occ += counter;
 				last_occ = &tcbs[0]+counter;
+                        }
 			counter++;
 		}
 
