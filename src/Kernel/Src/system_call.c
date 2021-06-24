@@ -3,6 +3,7 @@
 #include <systemcall.h>
 
 extern tcb *current_tcb;
+extern char active_tasks[MAX_TASKS];
 
 uint32_t c=0;
 
@@ -19,6 +20,8 @@ void __attribute__((naked)) SVCall_Handler(void)
 	{
 		case 1: wee_os_syscall_yield();
 			break;
+		case 2: wee_os_syscall_kill();
+			break;
 		default: c++;
 			break;
 	}
@@ -32,5 +35,31 @@ void wee_os_syscall_yield(void)
 #ifdef weighted_round_robin
 	current_tcb->c_weight = 0;
 #endif
+	SysTick->VAL = 0;
 	SCB->ICSR |= SCB_ICSR_PENDSTSET_Msk;
+}
+
+
+void wee_os_syscall_kill(void)
+{
+        if(current_tcb->next_tcb == current_tcb)
+	{
+		__enable_irq();
+		return;
+	}
+
+	if(current_tcb->pid != 0)
+	{
+		(current_tcb-1)->next_tcb = current_tcb->next_tcb;
+	}
+	else{
+		tcb *temp_tcb = current_tcb;
+		while(temp_tcb->next_tcb != current_tcb)
+			temp_tcb++;
+		temp_tcb->next_tcb = current_tcb->next_tcb;
+	}
+
+	active_tasks[current_tcb->pid] = 0;
+	__enable_irq();
+	wee_os_syscall_yield();
 }

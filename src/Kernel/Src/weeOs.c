@@ -2,8 +2,9 @@
 #include <sched.h>
 
 tcb tcbs[MAX_TASKS];
-tcb *task_ptr=&tcbs[0];
 tcb *current_tcb = &tcbs[0];
+char active_tasks[MAX_TASKS] = {0};
+
 
 int32_t STACK[MAX_TASKS][STACK_SIZE];
 
@@ -20,27 +21,59 @@ uint8_t wee_os_addthread(void(*task)(void)
 		)
 {
 	__disable_irq();
+	tcb *task_ptr=&tcbs[0];
+	uint32_t counter = 0;
+	while(active_tasks[counter] != 0){
+		task_ptr++;
+		counter++;
+		if (counter>MAX_TASKS){
+			__enable_irq();
+			return 0;
+		}
+	}
+
 	uint32_t task_num = task_ptr - &tcbs[0];
-	if (task_num>MAX_TASKS)
-		return 0;
 
-	if (task_ptr != &tcbs[0])
+	if (task_num != 0)
+	{
+		task_ptr->next_tcb = (task_ptr-1)->next_tcb;
 		(task_ptr-1)->next_tcb = task_ptr;
+	}
+	else
+	{
+		tcb *first_occ=&tcbs[0];
+		tcb *last_occ=&tcbs[0];
 
-	task_ptr->next_tcb = &tcbs[0];
+		while(counter < MAX_TASKS)
+		{
+			if(active_tasks[counter] == 1)
+			{
+				if(first_occ == &tcbs[0])
+					first_occ += counter;
+				last_occ = &tcbs[0]+counter;
+                        }
+			counter++;
+		}
+
+		task_ptr->next_tcb = first_occ;
+		last_occ->next_tcb = task_ptr;
+	}
+	
 	task_ptr->pid = task_num;
+
 #ifdef weighted_round_robin
 	task_ptr->weight = weight;
 	task_ptr->c_weight = weight;
 #endif
+
 	wee_os_stack_init(task_num);
 	STACK[task_num][PC] = (int32_t)task;
-
-	task_ptr++;
+	active_tasks[task_num] = 1;
 
 	__enable_irq();
 	return 1;
 }
+
 
 static void wee_os_schd_launch()
 {

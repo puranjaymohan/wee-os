@@ -21,6 +21,8 @@
 
 /*System Calls*/
 #define wee_os_yield(); wee_os_system_call(1);
+#define wee_os_kill(); wee_os_system_call(2);
+
 
 void wee_os_launch(uint32_t quanta);
 void wee_os_init(void);
