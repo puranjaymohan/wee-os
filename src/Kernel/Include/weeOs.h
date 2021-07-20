@@ -14,6 +14,10 @@
 #include <lm3s811.h>
 #endif
 
+#ifdef TM4C123GH6PM
+#include <TM4C123.h>
+#endif
+
 #define MAX_TASKS 10
 #define STACK_SIZE 100
 #define xPSR (STACK_SIZE-1)
