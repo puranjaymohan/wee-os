@@ -30,7 +30,6 @@
 [![Lines of code][lines-of-code-shield]][lines-of-code-url]
 
 
-
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -62,6 +61,7 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
+        <li><a href="#supported-hardware">Supported Hardware</a></li>
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
@@ -69,10 +69,16 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#building-weeos">Building WeeOs</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li>
+      <a href="#usage">Usage</a>
+      <ul>
+          <li><a href="#source-code">Source Code</a></li>
+          <li><a href="#using-it-in-your-project">Using it in your project</a></li>
+      </ul>
+    </li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -173,6 +179,7 @@ Install the prerequisites. Here is how to do it on Arch Linux.
    ```
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 ### Source Code
 
@@ -197,7 +204,7 @@ The src directory includes two directories: App and Kernel. The App directory ha
     └── Kernel
   ```
 
-### Using it in your project.
+### Using it in your project
 
 To use WeeOs in your project just setup WeeOs using the steps above.
 Add your code to src/App.
@@ -206,6 +213,7 @@ To create, add, kill tasks or use any other WeeOs feature, include the `#include
 
 To understand the usage of the WeeOs API have a look at API Documentation.
 <!-- ROADMAP -->
+
 ## Roadmap
 
 See the [open issues](https://github.com/puranjaymohan/wee-os/issues) for a list of proposed features (and known issues).
@@ -213,6 +221,7 @@ See the [open issues](https://github.com/puranjaymohan/wee-os/issues) for a list
 
 
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -226,6 +235,7 @@ Contributions are what make the open source community such an amazing place to b
 
 
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
@@ -233,6 +243,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 
 <!-- CONTACT -->
+
 ## Contact
 
 Puranjay Mohan - puranjay12@gmail.com
@@ -241,6 +252,7 @@ Abhay Chirania - abhaychirania2411@gmail.com
 Project Link: [https://github.com/puranjaymohan/wee-os](https://github.com/puranjaymohan/wee-os)
 
 <!-- ACKNOWLEDGEMENTS -->
+
 ## Acknowledgements
 
 * [Operating Systems Lectures IITD](http://www.cse.iitd.ernet.in/os-lectures)
