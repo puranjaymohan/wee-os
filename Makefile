@@ -33,7 +33,7 @@ OBJCOPY:=$(CROSS)objcopy
 
 # gcc & ld compiler flags
 OPT:=-Og
-FLAGS:=-mcpu=cortex-m4 -mthumb
+FLAGS:=-mcpu=cortex-m4 -mthumb -std=c11
 CFLAGS:=$(FLAGS) $(OPT) $(H) -fno-common -g3 -Wall -Werror -Wextra -D$(DEVICE) -D$(SCHD_ALG)
 LDFLAGS:=$(FLAGS) -T$(LINKER_FILE) -nostartfiles -nostdlib -lnosys
 
