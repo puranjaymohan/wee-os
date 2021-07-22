@@ -4,73 +4,53 @@
 tcb tcbs[MAX_TASKS];
 tcb *current_tcb = &tcbs[0];
 char active_tasks[MAX_TASKS] = {0};
-
-
 int32_t STACK[MAX_TASKS][STACK_SIZE];
 
-static void wee_os_stack_init(uint8_t i )
+static void wee_os_stack_init(uint8_t i)
 {
 	tcbs[i].sp = &STACK[i][STACK_SIZE-16];
 	STACK[i][xPSR] = (1 << 24);
 }
 
-uint8_t wee_os_addthread(void(*task)(void)
-#ifdef weighted_round_robin
-			,uint32_t weight
-#endif
-		)
+uint8_t wee_os_add_thread(task_prop *task_property)
 {
-	__disable_irq();
-	tcb *task_ptr=&tcbs[0];
+	tcb *task_ptr = &tcbs[0];
+	uint32_t task_num = 0;
 	uint32_t counter = 0;
 	while(active_tasks[counter] != 0){
 		task_ptr++;
 		counter++;
-		if (counter>MAX_TASKS){
-			__enable_irq();
+		if (counter>MAX_TASKS)
 			return 0;
-		}
 	}
-
-	uint32_t task_num = task_ptr - &tcbs[0];
-
-	if (task_num != 0)
-	{
+	task_num = task_ptr - &tcbs[0];
+	if (task_num != 0){
 		task_ptr->next_tcb = (task_ptr-1)->next_tcb;
 		(task_ptr-1)->next_tcb = task_ptr;
-	}
-	else
-	{
+	} else {
 		tcb *first_occ=&tcbs[0];
 		tcb *last_occ=&tcbs[0];
-
-		while(counter < MAX_TASKS)
-		{
-			if(active_tasks[counter] == 1)
-			{
+		while(counter < MAX_TASKS){
+			if(active_tasks[counter] == 1){
 				if(first_occ == &tcbs[0])
 					first_occ += counter;
 				last_occ = &tcbs[0]+counter;
                         }
 			counter++;
 		}
-
 		task_ptr->next_tcb = first_occ;
 		last_occ->next_tcb = task_ptr;
 	}
-	
+
 	task_ptr->pid = task_num;
-
+	task_ptr->name = task_property->name;
 #ifdef weighted_round_robin
-	task_ptr->weight = weight;
-	task_ptr->c_weight = weight;
+	task_ptr->weight = task_property->weight;
+	task_ptr->c_weight = task_property->weight;
 #endif
-
 	wee_os_stack_init(task_num);
-	STACK[task_num][PC] = (int32_t)task;
+	STACK[task_num][PC] = (int32_t)task_property->task; //Why int32??
 	active_tasks[task_num] = 1;
-
-	__enable_irq();
 	return 1;
 }
 
