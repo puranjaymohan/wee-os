@@ -136,26 +136,36 @@ Install the prerequisites. Here is how to do it on Arch Linux.
    ```sh
    cd wee-os
    ```
-3. Edit the Makefile to choose your hardware and scheduling algorithm. 
+3. Generate the config.mk file
    ```sh
-   # Name of the final elf output file                                             
-   PROJECT:=main                                                                   
-                                                                                   
-   #device for building the project                                                
-   DEVICE:=stm32l476rg                                                            
-                                                                                   
-   #Scheduling algorithm to be used by the OS                                      
-   SCHD_ALG = round_robin 
+   chmod +x configure.sh
+   ./configure.sh
    ```
-4. Run Make to build the final elf file.
+4. Edit config.mk to choose your hardware and scheduling algorithm. 
+   ```sh
+   #WeeOs Configuration File
+   #Please edit this file to configure WeeOs
+
+   #Name of the generated elf file
+   PROJECT := main
+
+   #Device for which the project has to be made
+   #Available Devices: stm32l476rg lm3s811 MK64F12 TM4C123GH6PM
+   DEVICE := stm32l476rg
+
+   #Scheduling Algorithm used in the App
+   #Available scheduling algorithms: round-robin weighted-round-robin
+   SCHD_ALG := round_robin
+   ```
+5. Run Make to build the final elf file.
    ```sh
    make
    ```
-5. Run OpenOCD in another terminal for your hardware.
+6. Run OpenOCD in another terminal for your hardware.
    ```sh
    openocd -f /usr/share/openocd/scripts/board/st_nucleo_l476rg.cfg
    ```
-6. Run GDB and upload the elf file to the target.
+7. Run GDB and upload the elf file to the target.
    ```sh
    arm-none-eabi-gdb build/main.elf -x scripts/gdb_commands
    ```

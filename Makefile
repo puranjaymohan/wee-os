@@ -1,11 +1,4 @@
-# Name of the final elf output file
-PROJECT:=main
-
-#device for building the project
-DEVICE:=TM4C123GH6PM
-
-#Scheduling algorithm to be used by the OS
-SCHD_ALG = round_robin
+include config.mk
 
 # Funtion to find all files inside a directory recursively
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
@@ -62,3 +55,7 @@ $(BUILD):
 .PHONY: clean
 clean:
 	rm -r $(BUILD)/$(PROJECT).elf $(BUILD) $(OBJECTS)
+
+.PHONY: mrproper
+mrproper:
+	rm -r config.mk $(BUILD)/$(PROJECT).elf $(BUILD) $(OBJECTS)
