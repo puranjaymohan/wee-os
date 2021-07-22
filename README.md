@@ -26,6 +26,8 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
+[![Build Status][travis-ci-shield]][travis-ci-url]
+[![Lines of code][lines-of-code-shield]][lines-of-code-url]
 
 
 
@@ -258,3 +260,7 @@ Project Link: [https://github.com/puranjaymohan/wee-os](https://github.com/puran
 [license-url]: https://github.com/puranjaymohan/wee-os/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/puranjaymohan
+[travis-ci-shield]: https://img.shields.io/travis/com/puranjaymohan/wee-os?style=for-the-badge
+[travis-ci-url]: https://travis-ci.com/puranjaymohan/wee-os
+[lines-of-code-shield]: https://img.shields.io/tokei/lines/github/puranjaymohan/wee-os?style=for-the-badge
+[lines-of-code-url]: https://github.com/puranjaymohan/wee-os
