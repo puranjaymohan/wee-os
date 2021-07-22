@@ -41,7 +41,7 @@
   <p align="center">
     A tiny RTOS for ARM Cortex-M3/M4 based Microcontrollers.
     <br />
-    <a href="https://github.com/puranjaymohan/wee-os"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/puranjaymohan/wee-os/blob/master/APIDOC.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/puranjaymohan/wee-os">View Demo</a>
@@ -97,7 +97,7 @@ It currently supports two scheduling algoriths and four hardware devices.It incl
 scheduler that supports round-robin and weighted round-robin scheduling algorithms.
 WeeOs if fully configurable. The scheduling algorithm and the hardware device can be set in the Makefile.
 
-## Supported Hardware
+### Supported Hardware
 
 * [ST NUCLEO-L476RG](https://www.st.com/en/evaluation-tools/nucleo-l476rg.html)
 * [TI EK-TM4C123GXL](https://www.ti.com/tool/EK-TM4C123GXL)
@@ -212,6 +212,8 @@ You can add .c .h or .s files in the src/App folder and they will be compiled, a
 To create, add, kill tasks or use any other WeeOs feature, include the `#include <weeOs.h>` in your source file. 
 
 To understand the usage of the WeeOs API have a look at API Documentation.
+
+[API DOCUMENTATION](https://github.com/puranjaymohan/wee-os/blob/master/APIDOC.md)
 <!-- ROADMAP -->
 
 ## Roadmap
