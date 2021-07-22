@@ -1,0 +1,30 @@
+language: c
+
+cache:
+  apt: true
+
+env:
+  matrix:
+    - DEV=stm32l476rg SCH=round_robin
+    - DEV=stm32l476rg SCH=weighted_round_robin
+    - DEV=lm3s811 SCH=round_robin
+    - DEV=lm3s811 SCH=weighted_round_robin
+    - DEV=MK64F12 SCH=round_robin
+    - DEV=MK64F12 SCH=weighted_round_robin
+    - DEV=TM4C123GH6PM SCH=round_robin
+    - DEV=TM4C123GH6PM SCH=weighted_round_robin
+
+before_install:
+  - sudo apt-get update -qq
+
+install:
+  - sudo apt-get install gcc-arm-none-eabi
+  - sudo apt-get install gcc-multilib
+  - sudo apt-get install libnewlib-arm-none-eabi
+before_script:
+  - echo "PROJECT := main" >> config.mk
+  - echo "DEVICE := $DEV" >> config.mk
+  - echo "SCHD_ALG := $SCH" >> config.mk
+
+script:
+  - make
