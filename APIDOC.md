@@ -6,6 +6,8 @@
   Here you can find details about all the functions provided by WeeOs.
 </p>
 
+<img src="images/call_graph.png" alt="Logo" width="831" height="313">
+
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
