@@ -14,6 +14,7 @@ int spin_lock_aquire(mutex *lock)
 			}
 		}
 	} while (locked);
+	__DMB();
 
 	return 0;
 }
