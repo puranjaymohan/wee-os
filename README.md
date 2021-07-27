@@ -28,7 +28,7 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![Build Status][travis-ci-shield]][travis-ci-url]
 [![Lines of code][lines-of-code-shield]][lines-of-code-url]
-
+[![GitHub release (latest by date)][release-shield]][release-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -278,3 +278,5 @@ Project Link: [https://github.com/puranjaymohan/wee-os](https://github.com/puran
 [travis-ci-url]: https://travis-ci.com/puranjaymohan/wee-os
 [lines-of-code-shield]: https://img.shields.io/tokei/lines/github/puranjaymohan/wee-os?style=for-the-badge
 [lines-of-code-url]: https://github.com/puranjaymohan/wee-os
+[release-shield]: https://img.shields.io/github/v/release/puranjaymohan/wee-os?style=for-the-badge
+[release-url]: https://github.com/puranjaymohan/wee-os/releases
