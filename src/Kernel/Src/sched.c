@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 #include <sched.h>
+#include <stdint.h>
+uint64_t Tick = 0;
 
 extern tcb * current_tcb;
 static inline void scheduler(void) __attribute__((always_inline));
@@ -14,6 +16,7 @@ static inline void schd_rr(void) __attribute__((always_inline));
 void SysTick_Handler(void)
 {
 	__disable_irq();
+	Tick++;
 	SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
 	__enable_irq();
 }

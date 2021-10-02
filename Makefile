@@ -41,7 +41,7 @@ LDFLAGS:=$(FLAGS) -T$(LINKER_FILE) -nostartfiles -nostdlib -lnosys
 all: $(BUILD) $(BUILD)/$(PROJECT).elf $(LINKER_FILE)
 
 $(BUILD)/$(PROJECT).elf: $(OBJECTS)
-	$(CC) $(LDFLAGS) $^ -o $@
+	$(CC) $(LDFLAGS) $^ -lgcc -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
